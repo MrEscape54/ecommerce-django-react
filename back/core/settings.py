@@ -195,6 +195,8 @@ SIMPLE_JWT = {
 
 # dj-rest-auth
 REST_USE_JWT = True
+OLD_PASSWORD_FIELD_ENABLED = True # To ask old password when changing password
+LOGOUT_ON_PASSWORD_CHANGE = False # to keep the user logged in after password change
 JWT_AUTH_COOKIE = 'my-app-auth'
 JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
 # dj-rest-auth to set first_name and last_name as required (see Custom Serializer in user model)

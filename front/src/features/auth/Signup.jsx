@@ -61,7 +61,7 @@ const Signup = () => {
             {success
               ?
               <div className='p-1.5 my-1.5 rounded-md text-sm font-medium bg-green-50 text-green-600' >
-                {success} <b>Plase check your inbox.</b>
+                {success} <b>Please check your inbox.</b>
               </div>
               : null
             }

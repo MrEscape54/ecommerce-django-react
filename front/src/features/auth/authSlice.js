@@ -3,6 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { signupAPI } from "./Signup";
 import { activationAPI } from "./Activate";
 import { loginAPI } from "./Login"
+import { passwordResetAPI } from "./PasswordReset";
+import { passwordResetConfirmAPI } from "./PasswordResetConfirm";
+import { passwordChangeAPI } from "./PasswordChange";
 import { refreshAPI, verifyAPI, loadUserAPI } from "../../components/hocs/Layout";
 
 const initialState = {
@@ -134,6 +137,51 @@ export const authSlice = createSlice({
         state.user = payload
       }),
       builder.addCase(loadUserAPI.rejected, (state, { payload }) => {
+        state.loading = false
+        state.error = payload
+      }),
+
+      /* Password Reset */
+      builder.addCase(passwordResetAPI.pending, state => {
+        state.loading = true
+        state.success = null
+        state.error = null
+      }),
+      builder.addCase(passwordResetAPI.fulfilled, (state, { payload }) => {
+        state.loading = false
+        state.success = payload
+      }),
+      builder.addCase(passwordResetAPI.rejected, (state, { payload }) => {
+        state.loading = false
+        state.error = payload
+      }),
+
+      /* Password Reset Confirm*/
+      builder.addCase(passwordResetConfirmAPI.pending, state => {
+        state.loading = true
+        state.success = null
+        state.error = null
+      }),
+      builder.addCase(passwordResetConfirmAPI.fulfilled, (state, { payload }) => {
+        state.loading = false
+        state.success = payload
+      }),
+      builder.addCase(passwordResetConfirmAPI.rejected, (state, { payload }) => {
+        state.loading = false
+        state.error = payload
+      }),
+
+      /* Password Change*/
+      builder.addCase(passwordChangeAPI.pending, state => {
+        state.loading = true
+        state.success = null
+        state.error = null
+      }),
+      builder.addCase(passwordChangeAPI.fulfilled, (state, { payload }) => {
+        state.loading = false
+        state.success = payload
+      }),
+      builder.addCase(passwordChangeAPI.rejected, (state, { payload }) => {
         state.loading = false
         state.error = payload
       })
