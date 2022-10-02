@@ -28,9 +28,7 @@ export const signupAPI = createAsyncThunk(
 
 const Signup = () => {
 
-  const errors = useSelector(state => state.auth.error)
-  const success = useSelector(state => state.auth.success)
-  const loading = useSelector(state => state.auth.loading)
+  const { error, success, loading } = useSelector(state => state.auth)
   const dispatch = useDispatch()
 
   const [formData, setFormData] = useState({ email: "", first_name: "", last_name: "", password1: "", password2: "" })
@@ -65,10 +63,10 @@ const Signup = () => {
               </div>
               : null
             }
-            {errors && errors.hasOwnProperty('Network_Error')
+            {error && error.hasOwnProperty('Network_Error')
               ?
               <div className='p-1.5 my-1.5 rounded-md text-[0.75em] bg-red-50 text-red-600' >
-                {errors.Network_Error}
+                {error.Network_Error}
               </div>
               : null
             }
@@ -87,10 +85,10 @@ const Signup = () => {
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
-                {errors && errors.hasOwnProperty('email')
+                {error && error.hasOwnProperty('email')
                   ?
                   <ul className='p-1.5 mt-1.5 rounded-md text-[0.75em] bg-red-50'>
-                    {errors.email.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
+                    {error.email.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
                   </ul>
                   : null
                 }
@@ -110,10 +108,10 @@ const Signup = () => {
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
-                {errors && errors.hasOwnProperty('first_name')
+                {error && error.hasOwnProperty('first_name')
                   ?
                   <ul className='p-1.5 mt-1.5 rounded-md text-[0.75em] bg-red-50'>
-                    {errors.first_name.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
+                    {error.first_name.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
                   </ul>
                   : null
                 }
@@ -133,10 +131,10 @@ const Signup = () => {
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
-                {errors && errors.hasOwnProperty('last_name')
+                {error && error.hasOwnProperty('last_name')
                   ?
                   <ul className='p-1.5 mt-1.5 rounded-md text-[0.75em] bg-red-50'>
-                    {errors.last_name.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
+                    {error.last_name.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
                   </ul>
                   : null
                 }
@@ -156,10 +154,10 @@ const Signup = () => {
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
-                {errors && errors.hasOwnProperty('password1')
+                {error && error.hasOwnProperty('password1')
                   ?
                   <ul className='p-1.5 mt-1.5 rounded-md text-[0.75em] bg-red-50'>
-                    {errors.password1.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
+                    {error.password1.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
                   </ul>
                   : null
                 }
@@ -178,10 +176,10 @@ const Signup = () => {
                     required
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
-                  {errors && errors.hasOwnProperty('non_field_errors')
+                  {error && error.hasOwnProperty('non_field_errors')
                     ?
                     <ul className='p-1.5 mt-1.5 rounded-md text-[0.75em] bg-red-50'>
-                      {errors.non_field_errors.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
+                      {error.non_field_errors.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
                     </ul>
                     : null
                   }

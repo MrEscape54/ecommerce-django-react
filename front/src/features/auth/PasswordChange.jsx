@@ -34,19 +34,18 @@ export const passwordChangeAPI = createAsyncThunk(
 
 const PasswordChange = () => {
 
-  const errors = useSelector(state => state.auth.error)
-  const success = useSelector(state => state.auth.success)
-  const loading = useSelector(state => state.auth.loading)
-  const access = useSelector(state => state.auth.access)
-
+  const { error, success, loading, access } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!access) {
-      navigate('/');
+    if (!access)
+      navigate('/login');
+    if (success) {
+      setFormData({ old_password: "", new_password1: "", new_password2: "" })
+      navigate('/login');
     }
-  }, [access])
+  }, [access, success])
 
 
   const [formData, setFormData] = useState({ old_password: "", new_password1: "", new_password2: "" })
@@ -69,17 +68,10 @@ const PasswordChange = () => {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            {success
-              ?
-              <div className='p-1.5 my-1.5 rounded-md text-sm font-medium bg-green-50 text-green-600' >
-                <b>Password changed successfully</b>
-              </div>
-              : null
-            }
-            {errors && errors.hasOwnProperty('Network_Error')
+            {error && error.hasOwnProperty('Network_Error')
               ?
               <div className='p-1.5 my-1.5 rounded-md text-[0.75em] bg-red-50 text-red-600' >
-                {errors.Network_Error}. Try again later
+                {error.Network_Error}. Try again later
               </div>
               :
               null
@@ -99,10 +91,10 @@ const PasswordChange = () => {
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
-                {errors && errors.hasOwnProperty('old_password')
+                {error && error.hasOwnProperty('old_password')
                   ?
                   <ul className='p-1.5 mt-1.5 rounded-md text-[0.75em] bg-red-50'>
-                    {errors.old_password.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
+                    {error.old_password.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
                   </ul>
                   : null
                 }
@@ -122,10 +114,10 @@ const PasswordChange = () => {
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
-                {errors && errors.hasOwnProperty('new_password2')
+                {error && error.hasOwnProperty('new_password2')
                   ?
                   <ul className='p-1.5 mt-1.5 rounded-md text-[0.75em] bg-red-50'>
-                    {errors.new_password2.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
+                    {error.new_password2.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
                   </ul>
                   : null
                 }

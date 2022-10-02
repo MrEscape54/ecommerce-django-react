@@ -43,9 +43,8 @@ const message = [
 
 const Activate = () => {
 
-  const errors = useSelector(state => state.auth.error)
-  const success = useSelector(state => state.auth.success)
-  const loading = useSelector(state => state.auth.loading)
+  const { error, success, loading } = useSelector(state => state.auth)
+
   const dispatch = useDispatch()
   const params = useParams()
   const navigate = useNavigate()
@@ -53,7 +52,7 @@ const Activate = () => {
   const key = params.key
 
   useEffect(() => {
-    dispatch(activationAPI({ key: key }))
+    localStorage.getItem('access') ? navigate('/') : dispatch(activationAPI({ key: key }))
   }, [])
 
   const [counter, setCounter] = useState(5)
@@ -70,18 +69,18 @@ const Activate = () => {
 
   return (
     <div className={`flex h-screen text-white 
-    ${success ? 'bg-green-800' : errors ? 'bg-red-800' : 'bg-slate-200'}`}>
+    ${success ? 'bg-green-800' : error ? 'bg-red-800' : 'bg-slate-200'}`}>
       <div
         className={`p-10 w-1/2 mx-auto text-center flex flex-col items-center self-center 
-        ${success ? 'bg-green-600' : errors ? 'bg-red-600' : null}`}>
-        <p className='mb-5 text-2xl font-bold'>{errors ? errors : success}</p>
+        ${success ? 'bg-green-600' : error ? 'bg-red-600' : null}`}>
+        <p className='mb-5 text-2xl font-bold'>{error ? error : success}</p>
         {loading ? <ThreeDots color="#FFF" width={80} height={80} />
-          : errors ? message.find(msg => msg.info === 'error').icon
+          : error ? message.find(msg => msg.info === 'error').icon
             : success ? message.find(msg => msg.info === 'success').icon : null}
         <p className='mt-5 text-lg font-bold'>
-          {errors === 'Network Error'
+          {error === 'Network Error'
             ? 'Plase try again later' : success
-              ? 'You can now ' : errors ? 'The activation key provided is not valid' : null}
+              ? 'You can now ' : error ? 'The activation key provided is not valid' : null}
           {success ? <Link className='underline' to='/login'>login</Link> : null}
         </p>
         <p className='mb-3'>{success ? 'You will be redirected to the login page in: ' : null}

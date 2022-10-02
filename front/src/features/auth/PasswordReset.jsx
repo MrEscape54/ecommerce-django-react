@@ -16,7 +16,6 @@ export const passwordResetAPI = createAsyncThunk(
       const body = JSON.stringify({ email });
 
       const res = await axios.post(`${API_URL}/auth/password/reset/`, body, config)
-
       return res.data.detail
 
     } catch (error) {
@@ -30,19 +29,18 @@ export const passwordResetAPI = createAsyncThunk(
 
 const PasswordReset = () => {
 
-  const errors = useSelector(state => state.auth.error)
-  const success = useSelector(state => state.auth.success)
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-  const loading = useSelector(state => state.auth.loading)
-
+  const { error, success, loading } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isAuthenticated)
+    if (localStorage.getItem('access'))
       navigate('/', { replace: true });
-  }, [isAuthenticated])
-
+    if (success) {
+      setFormData({ email: "" })
+      navigate('/', { replace: true });
+    }
+  }, [success])
 
   const [formData, setFormData] = useState({ email: "" })
   const { email } = formData;
@@ -64,17 +62,10 @@ const PasswordReset = () => {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            {success
-              ?
-              <div className='p-1.5 my-1.5 rounded-md text-sm font-medium bg-green-50 text-green-600' >
-                {success} <b>Please check your inbox.</b>
-              </div>
-              : null
-            }
-            {errors && errors.hasOwnProperty('Network_Error')
+            {error && error.hasOwnProperty('Network_Error')
               ?
               <div className='p-1.5 my-1.5 rounded-md text-[0.75em] bg-red-50 text-red-600' >
-                {errors.Network_Error}. Try again later
+                {error.Network_Error}. Try again later
               </div>
               :
               null
@@ -94,10 +85,10 @@ const PasswordReset = () => {
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
-                {errors && errors.hasOwnProperty('email')
+                {error && error.hasOwnProperty('email')
                   ?
                   <ul className='p-1.5 mt-1.5 rounded-md text-[0.75em] bg-red-50'>
-                    {errors.email.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
+                    {error.email.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
                   </ul>
                   : null
                 }

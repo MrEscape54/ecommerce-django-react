@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from 'react-toastify'
 
 import { signupAPI } from "./Signup";
 import { activationAPI } from "./Activate";
@@ -150,6 +151,7 @@ export const authSlice = createSlice({
       builder.addCase(passwordResetAPI.fulfilled, (state, { payload }) => {
         state.loading = false
         state.success = payload
+        toast.info(`${payload}. Please, check your inbox`)
       }),
       builder.addCase(passwordResetAPI.rejected, (state, { payload }) => {
         state.loading = false
@@ -165,6 +167,7 @@ export const authSlice = createSlice({
       builder.addCase(passwordResetConfirmAPI.fulfilled, (state, { payload }) => {
         state.loading = false
         state.success = payload
+        toast.success(payload)
       }),
       builder.addCase(passwordResetConfirmAPI.rejected, (state, { payload }) => {
         state.loading = false
@@ -180,6 +183,7 @@ export const authSlice = createSlice({
       builder.addCase(passwordChangeAPI.fulfilled, (state, { payload }) => {
         state.loading = false
         state.success = payload
+        toast.success(payload)
       }),
       builder.addCase(passwordChangeAPI.rejected, (state, { payload }) => {
         state.loading = false

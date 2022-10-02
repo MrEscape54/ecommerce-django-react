@@ -1,6 +1,4 @@
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -87,11 +85,9 @@ const Layout = ({ children }) => {
     }
   }, [])
 
-
   return (
     <div>
       <Navbar />
-      <ToastContainer autoClose={5000} />
       {children}
       <Footer />
     </div>

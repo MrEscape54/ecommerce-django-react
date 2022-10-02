@@ -28,12 +28,7 @@ export const passwordResetConfirmAPI = createAsyncThunk(
 
 const PasswordResetConfirm = () => {
 
-  const errors = useSelector(state => state.auth.error)
-  const success = useSelector(state => state.auth.success)
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-  const loading = useSelector(state => state.auth.loading)
-
-
+  const { error, success, loading } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   const params = useParams()
   const navigate = useNavigate()
@@ -45,9 +40,9 @@ const PasswordResetConfirm = () => {
   const { new_password1, new_password2 } = formData;
 
   useEffect(() => {
-    if (isAuthenticated)
+    if (localStorage.getItem('access'))
       navigate('/', { replace: true });
-  }, [isAuthenticated])
+  }, [])
 
   useEffect(() => {
     setFormData({ new_password1: "", new_password2: "" })
@@ -72,17 +67,17 @@ const PasswordResetConfirm = () => {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            {errors && errors.hasOwnProperty('Network_Error')
+            {error && error.hasOwnProperty('Network_Error')
               ?
               <div className='p-1.5 my-1.5 rounded-md text-[0.75em] bg-red-50 text-red-600' >
-                {errors.Network_Error}
+                {error.Network_Error}
               </div>
-              : errors && errors.hasOwnProperty('new_password2')
+              : error && error.hasOwnProperty('new_password2')
                 ?
                 <ul className='p-1.5 mt-1.5 rounded-md text-[0.75em] bg-red-50'>
-                  {errors.new_password2.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
+                  {error.new_password2.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
                 </ul>
-                : errors && (errors.hasOwnProperty('token') || errors.hasOwnProperty('uid'))
+                : error && (error.hasOwnProperty('token') || error.hasOwnProperty('uid'))
                   ?
                   <div className='p-1.5 my-1.5 rounded-md text-[0.75em] bg-red-50 text-red-600' >
                     Your password could not be changed
@@ -105,10 +100,10 @@ const PasswordResetConfirm = () => {
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
-                {errors && errors.hasOwnProperty('new_password1')
+                {error && error.hasOwnProperty('new_password1')
                   ?
                   <ul className='p-1.5 mt-1.5 rounded-md text-[0.75em] bg-red-50'>
-                    {errors.new_password1.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
+                    {error.new_password1.map((error, i) => <li className='text-red-600' key={i}>{error}</li>)}
                   </ul>
                   : null
                 }
