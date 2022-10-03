@@ -1,3 +1,3 @@
 # ecommerce-django-react
 
-E-Commerce sample using Django + DRF as BACK and React + RTK as Front
+E-Commerce sample using Django + DRF (Back) and React + RTK (Front)
