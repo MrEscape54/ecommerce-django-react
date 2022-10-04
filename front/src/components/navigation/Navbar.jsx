@@ -319,7 +319,7 @@ const Navbar = () => {
                 {user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1)}
                 <button className="ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                   onClick={handleLogout}>
-                  Logout
+                  Logout ccc
                 </button>
               </div>
               :
